@@ -1,6 +1,6 @@
-# FogROS2_bootcamp
+# FogROS2_tutorial
 
-## Before bootcamp instructions
+## Before tutorial instructions
 
 Install Docker Desktop (if not already installed).  Select the appropriate link below and follow the instructions.  For Mac and Windows, this amounts to following the download link, and installing the software.
 
