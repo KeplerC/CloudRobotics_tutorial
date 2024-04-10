@@ -1,4 +1,4 @@
-# FogROS2_tutorial
+# Cloud and Fog Robotics: A Hands-on Tutorial with ROS2 and FogROS2 (ICRA 2024)
 
 ## Before tutorial instructions
 
