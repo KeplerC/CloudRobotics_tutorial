@@ -8,13 +8,20 @@ WORKDIR /fog_ws
 # COPY ./rt-fogros2 /fog_ws/src/rt-fogros2
 WORKDIR /fog_ws/src
 RUN git clone https://github.com/cloudgripper/cloudgripper-ros.git
-RUN git clone https://github.com/KeplerC/fogros2-ls.git
+RUN git clone https://github.com/KeplerC/fogros2-ls.git 
 COPY ./fogros_camp ./fogros_camp
+RUN cd fogros2-ls && git pull 
+
+
+# generate crypto 
+WORKDIR /fog_ws/src/fogros_camp/configs
+RUN ./generate_crypto.sh
 
 WORKDIR /fog_ws 
 RUN . /opt/ros/humble/setup.sh && colcon build 
-# RUN . ./install/setup.sh &&  cargo build --release --manifest-path ./src/rt-fogros2/Cargo.toml
+RUN . ./install/setup.sh &&  cargo build --release --manifest-path ./src/fogros2-ls/Cargo.toml
 
+ENV CLOUDGRIPPER_API_KEY=DQmR5EwuT4275TaXGT8yb9Eq942aILk5
 
 
 # RUN ls /fog_ws/install/../src/rt-fogros2/target/release/gdp-router

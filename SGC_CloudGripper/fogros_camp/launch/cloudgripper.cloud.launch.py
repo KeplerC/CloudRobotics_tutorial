@@ -7,7 +7,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'robot_name', 
-            default_value='1',
+            default_value='robot1',
             description='Cloudgripper robot name'
         ),
         Node(
@@ -16,9 +16,10 @@ def generate_launch_description():
             output="screen",
             emulate_tty = True,
             parameters = [
-                {"config_file_path": "/fog_ws/src/fogros_camp/configs/"}, 
+                {"config_path": "/fog_ws/src/fogros_camp/configs/"}, 
+                {"crypto_path": "/fog_ws/src/fogros_camp/configs/crypto"}, 
                 {"config_file_name": "cloudgripper.yaml"}, 
-                {"whoami": "cloud"},
+                {"whoami": "machine_cloud"},
         ]),
         Node(
             package='cloudgripper_ros',

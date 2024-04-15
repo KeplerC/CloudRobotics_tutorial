@@ -1,36 +1,58 @@
 
 # crypto based as unique identifiers 
 identifiers: 
-  # crypto for the task (same for all robots/services on the same task)
-  task: robot1
-  # crypto unique for the robot 
-  # note #0 : 
-  # for now, it's not bound to an actual certificate yet, name whatever you want
-  # but make sure to match this with the assignment 
-  # note #1 : this value is overriden by rosparam's whoami
-  # note #2 : feel free to define it here or define it at rosparam
-  # whoami: machine_talker 
-  
+  task: test_cert
+
 topics:
-  - topic_name: /chatter
+  # robot -> user
+  - topic_name: /base_camera/image
+    topic_type: sensor_msgs/msg/Image
+  - topic_name: /top_camera/image
+    topic_type: sensor_msgs/msg/Image
+  - topic_name: /robot_state
+    topic_type: cloudgripper_msgs/msg/RobotState
+  # user -> robot
+  - topic_name: /gripper_value
+    topic_type: std_msgs/msg/Float32
+  - topic_name: /rotation_angle
+    topic_type: std_msgs/msg/Int16
+  - topic_name: /step_command
     topic_type: std_msgs/msg/String
+  - topic_name: /xy
+    topic_type: geometry_msgs/msg/Point
+  - topic_name: /z
+    topic_type: std_msgs/msg/Float32
 
 # declare possible states 
 # pub: publish to the swarm
 # sub: subscribe to the swarm
 # note this is reversed from prior version of SGC config file
 state_machine: 
-  talker: 
+  cloud: 
     topics:
-      - /chatter: pub 
-  listener: 
+      - /base_camera/image: pub
+      - /top_camera/image: pub
+      - /robot_state: pub
+      - /gripper_value: sub
+      - /rotation_angle: sub
+      - /step_command: sub
+      - /xy: sub
+      - /z: sub
+  user: 
     topics:
-      - /chatter: sub 
+      - /base_camera/image: sub
+      - /top_camera/image: sub
+      - /robot_state: sub
+      - /gripper_value: pub
+      - /rotation_angle: pub
+      - /step_command: pub
+      - /xy: pub
+      - /z: pub
 
 # name: state
 # name need to match the identitifer's whoami
 # state should be declared in possible states 
 # Phase 1: only allow changing the assignment at runtime 
 assignment:
-  machine_talker: talker
-  machine_listener: listener
+  machine_cloud: cloud
+  machine_user: user
